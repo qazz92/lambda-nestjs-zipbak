@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - npm install
+      - npm install -g serverless
+
+  build:
+    commands:
+      - serverless deploy --stage dev | tee deploy.out
+
+#  post_build:
+#    commands:
+#      - . ./test.sh
