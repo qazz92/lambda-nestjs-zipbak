@@ -19,12 +19,18 @@ export class CreatePostInput {
     @IsNotEmpty()
     category: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        nullable: true
+    })
     emotion?: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        nullable: true
+    })
     target?: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        nullable: true
+    })
     room?: string;
 }

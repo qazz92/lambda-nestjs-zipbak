@@ -2,7 +2,7 @@ import {Body, Controller, Get, HttpCode, Post, Query, Req, UseGuards} from '@nes
 import {ReplyService} from "./reply.service";
 import {CreateReplyInput} from "./model/create-reply.input";
 import {ListReplyInput} from "./model/list-reply.input";
-import {ApiCreatedResponse, ApiOkResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags} from "@nestjs/swagger";
 import {Reply} from "./model/reply.model";
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 
@@ -17,6 +17,7 @@ export class ReplyController {
     })
     @HttpCode(201)
     @Post()
+    @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     async create(@Body() body : CreateReplyInput, @Req() req : any) {
         return await this.replyService.create(body, req.user);

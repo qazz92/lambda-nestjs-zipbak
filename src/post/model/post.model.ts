@@ -13,5 +13,8 @@ export class Post extends CreatePostInput {
     userId: string;
 
     @ApiProperty()
+    profile: string;
+
+    @ApiProperty()
     createdAt: number;
 }

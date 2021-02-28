@@ -22,12 +22,11 @@ export class AuthService {
 
             if (res.status === 200) {
                 const data = res.data;
-                console.log(data);
-                const user = this.userService.find(data.id);
-                if (typeof user !== 'undefined') {
+                const user = await this.userService.find(data.id);
+                if (typeof user !== 'undefined' && user.count > 0) {
                     return user;
                 } else {
-                    return null;
+                    return await this.userService.create({socialId: data.id, socialType: 'kakao', name: data.properties.nickname})
                 }
             }
 

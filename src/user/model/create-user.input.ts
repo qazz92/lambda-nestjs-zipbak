@@ -11,4 +11,9 @@ export class CreateUserInput {
     @IsString()
     @IsNotEmpty()
     socialType: string;
+
+    @ApiProperty()
+    @IsString()
+    @IsNotEmpty()
+    name: string;
 }

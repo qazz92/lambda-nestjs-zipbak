@@ -8,6 +8,9 @@ export const UserSchema = new Schema({
     socialType: {
         type: String,
     },
+    name: {
+        type: String,
+    },
     socialId: {
         type: Number,
         index: {

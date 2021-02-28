@@ -1,4 +1,4 @@
-import {Controller, UseGuards, Req, Post, HttpCode} from '@nestjs/common';
+import {Controller, UseGuards, Req, Post, HttpCode, Res} from '@nestjs/common';
 import {AuthService} from "./auth.service";
 import {ApiOkResponse, ApiTags} from "@nestjs/swagger";
 import {KaKaoAuthGuard} from "./kakao-auth.guard";
@@ -12,7 +12,9 @@ export class AuthController {
     @Post('kakao')
     @HttpCode(200)
     @UseGuards(KaKaoAuthGuard)
-    async kakaoAuthCheck(@Req() req : any) {
-        return this.authService.login(req);
+    async kakaoAuthCheck(@Req() req : any, @Res({ passthrough: true }) response: any) {
+        const token = await this.authService.login(req);
+        response.cookie('token', token.access_token, {httpOnly : true})
+        return token;
     }
 }

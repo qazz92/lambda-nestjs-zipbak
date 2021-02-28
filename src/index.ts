@@ -8,6 +8,7 @@ import express from 'express';
 import { Server } from 'http';
 import { AppModule } from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
+import cookieParser from "cookie-parser";
 
 let cachedServer: Server;
 
@@ -31,6 +32,7 @@ const bootstrapServer = async (): Promise<Server> => {
 
   app.useGlobalPipes(new ValidationPipe({ forbidUnknownValues: true }));
   app.enableCors();
+  app.use(cookieParser());
   await app.init();
   return createServer(expressApp);
 };

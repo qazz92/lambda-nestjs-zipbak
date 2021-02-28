@@ -1,5 +1,5 @@
 import {Body, Controller, Get, HttpCode, Param, Post, Query, Req, UseGuards} from '@nestjs/common';
-import {ApiCreatedResponse, ApiOkResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags} from "@nestjs/swagger";
 import {PostService} from "./post.service";
 import {Post as PostModel} from "./model/post.model";
 import {CreatePostInput} from "./model/create-post.input";
@@ -18,6 +18,7 @@ export class PostController {
     })
     @Post()
     @HttpCode(201)
+    @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     async create(@Body() body: CreatePostInput, @Req() req : any) {
         return await this.postService.create(body, req.user);

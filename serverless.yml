@@ -2,8 +2,10 @@ service: aws-nestjs-zipbak
 
 provider:
   name: aws
-  runtime: nodejs12.x
-  memory: 256
+  runtime: nodejs14.x
+  memorySize: 256
+  timeout: 6
+  logRetentionInDays: 7
   profile: rokhun
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'ap-northeast-2'}
@@ -13,7 +15,15 @@ provider:
     REGION: ${self:provider.region}
     NO_COLOR: ${env:NO_COLOR, 'true'}
   apiGateway:
+    metrics: ${self:custom.metrics.${opt:stage, 'dev'}, 'false'}
     shouldStartNameWithService: true
+  vpc:
+    securityGroupIds:
+      - sg-0485cd62e49546027
+    subnetIds:
+      - subnet-061e7d6e7c1fe71a8
+      - subnet-061e93c93cd4c3749
+      - subnet-01bfef7fd4d70eb73
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -38,6 +48,9 @@ package:
     - node_modules/@types/**
 
 custom:
+  metrics:
+    dev: false
+    prod: true
   dynamodb:
     stages:
       - ${self:provider.stage}

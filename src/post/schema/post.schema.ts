@@ -27,6 +27,9 @@ export const PostSchema = new Schema({
     room: {
         type: String,
     },
+    profile: {
+        type: String,
+    },
     postType: {
         type: String,
         index: {
